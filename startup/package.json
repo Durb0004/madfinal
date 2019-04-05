@@ -1,0 +1,21 @@
+{
+  "name": "a2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "DEBUG=week7* NODE_ENV=dev PORT=3030 nodemon app.js"
+  },
+  "keywords": [],
+  "author": "Dylan Durbano",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "express": "^4.16.4",
+    "express-mongo-sanitize": "^1.3.2",
+    "mongoose": "^5.4.18",
+    "nodemon": "^1.18.10",
+    "xss": "^1.0.3"
+  }
+}
