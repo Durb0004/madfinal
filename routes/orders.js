@@ -12,26 +12,25 @@ router.get('/', authorize, async (req, res) => {
 })
 
 router.post('/', sanitizeBody, authorize, async (req, res, next) => {
+
     try {
 
-
-        let newOrder = new Course(req.sanitizedBody)
+        let newOrder = new Order(req.sanitizedBody)
         await newOrder.save()
+
         res.status(201).send({
             data: newOrder
         })
-
     } catch (err) {
         next(req, res)
     }
-
 })
 
 router.get('/:id', authorize, async (req, res, next) => {
     try {
         const order = await Order.findById(req.params.id)
         if (!order) throw new ResourceNotFoundError(
-            `We could not find a car with id: ${req.params.id}`
+            `We could not find an order with id: ${req.params.id}`
         )
         res.send({
             data: order

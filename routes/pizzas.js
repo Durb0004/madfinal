@@ -58,7 +58,7 @@ router.patch('/:id', sanitizeBody, authorize, staff, async (req, res, next) => {
       }
     )
     if (!pizza) throw new ResourceNotFoundError(
-      `We could not find a car with id: ${req.params.id}`
+      `We could not find a pizza with id: ${req.params.id}`
     )
     res.send({
       data: pizza

@@ -34,7 +34,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const ingredient = await Ingredient.findById(req.params.id)
     if (!ingredient) throw new ResourceNotFoundError(
-      `We could not find a car with id: ${req.params.id}`
+      `We could not find an ingredient with id: ${req.params.id}`
     )
     res.send({
       data: ingredient

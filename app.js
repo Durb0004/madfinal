@@ -19,6 +19,8 @@ app.use('/auth', require('./routes/auth'))
 
 app.use('/api/ingredients', require('./routes/ingredient'))
 app.use('/api/pizzas', require("./routes/pizzas"))
+app.use('/api/orders', require("./routes/orders"))
+
 
 
 app.use(require('./middleware/logError'))

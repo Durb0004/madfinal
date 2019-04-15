@@ -36,6 +36,24 @@ const schema = new mongoose.Schema({
     ref: 'Ingredient'
   }]
 });
+schema.pre('save', async function () {
+  let total = 0;
+  await this.populate('ingredients extraToppings').execPopulate();
+  [...this.ingredients, ...this.extraToppings].forEach(ingredient => {
+
+    total += ingredient.price
+
+
+  })
+  console.log(total)
+
+  if (total > this.price) {
+    this.price = total;
+
+  }
+})
+
+
 
 const Model = mongoose.model("Pizza", schema);
 

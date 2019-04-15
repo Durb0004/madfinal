@@ -22,7 +22,7 @@ router.post('/tokens', sanitizeBody, async (req, res) => {
     email,
     password
   } = req.sanitizedBody
-  const user = await User.authenticate(email, password).populate('customer')
+  const user = await User.authenticate(email, password)
   const time = new Date
   time.setHours(time.getHours() - 4);
 
@@ -72,6 +72,37 @@ router.get('/users/me', authorize, async (req, res) => {
     data: user
   })
 })
+// router.patch('/users/me', sanitizeBody, authorize, async (req, res, next) => {
+//   try {
+
+//     const {
+//       _id,
+//       ...otherAttributes
+//     } = req.sanitizedBody
+
+//     const user = await User.findByIdAndUpdate(
+//       req.params.id, {
+//         _id: req.params.id,
+//         ...otherAttributes
+//       }, {
+//         new: true,
+//         runValidators: true
+//       }
+//     )
+//     if (!user) throw new ResourceNotFoundError(
+//       `We could not find a user with id: ${req.params.id}`
+//     )
+//     res.send({
+//       data: user
+//     })
+//   } catch (err) {
+//     next(err)
+//   }
+
+
+
+
+// })
 
 
 

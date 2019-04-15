@@ -2,7 +2,6 @@ const User = require('../models/User')
 module.exports = async function (req, res, next) {
 
     const user = await User.findById(req.user._id);
-    console.log(user)
     if (!user.isStaff) {
         return res.status(403).send({
             errors: [{

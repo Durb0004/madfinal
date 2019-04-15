@@ -2,17 +2,29 @@ const jwt = require('jsonwebtoken')
 const jwtPrivateKey = 'superSecureSecret'
 
 module.exports = (req, res, next) => {
-  const token = req.header('bearer') 
+
+  function parseToken(header) {
+    if (header) {
+      const [type, token] = header.split(' ');
+      if (type == 'Bearer' && typeof token !== 'undefiend') {
+        return token
+      } else {
+        return undefined
+      }
+
+    }
+  }
+
+
+  const token = parseToken(req.header('Authorization'))
   if (!token) {
     return res.status(401).send({
-      errors: [
-        {
-          status: 'Unauthorized',
-          code: '401',
-          title: 'Authentication failed',
-          description: 'Missing bearer token'
-        }
-      ]
+      errors: [{
+        status: 'Unauthorized',
+        code: '401',
+        title: 'Authentication failed',
+        description: 'Missing bearer token'
+      }]
     })
   }
 
@@ -22,14 +34,12 @@ module.exports = (req, res, next) => {
     next()
   } catch (err) {
     res.status(400).send({
-      errors: [
-        {
-          status: 'Bad request',
-          code: '400',
-          title: 'Validation Error',
-          description: 'Invalid bearer token'
-        }
-      ]
+      errors: [{
+        status: 'Bad request',
+        code: '400',
+        title: 'Validation Error',
+        description: 'Invalid bearer token'
+      }]
     })
   }
 }
