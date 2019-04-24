@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const saltRounds = 14
 const uniqueValidator = require('mongoose-unique-validator')
 const validator = require('validator');
@@ -59,10 +59,7 @@ schema.statics.authenticate = async function (email, password) {
   return passwordDidMatch ? user : null
 
 }
-schema.post('findByIdAndUpdate', function (doc) {
-  doc.save()
-  next()
-})
+
 schema.pre('save', async function (next) {
   // Only encrypt if the password property is being changed.
   if (!this.isModified('password')) return next()
@@ -70,6 +67,7 @@ schema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, saltRounds)
   next()
 })
+
 
 schema.methods.toJSON = function () {
   const obj = this.toObject()

@@ -6,6 +6,7 @@ const sanitizeBody = require("../../middleware/sanitizeBody")
 const authorize = require('../../middleware/auth')
 const AuthAttempts = require("../../models/authAttempts")
 const Order = require("../../models/Orders")
+const ResourceNotFoundError = require('../../exceptions/ResourceNotFound')
 // Register a new user
 router.post('/users', sanitizeBody, (req, res, next) => {
   new User(req.sanitizedBody)
@@ -66,43 +67,38 @@ router.post('/tokens', sanitizeBody, async (req, res) => {
     }
   })
 })
-router.get('/users/me', authorize, async (req, res) => {
+router.get('/users/me', sanitizeBody, authorize, async (req, res) => {
   const user = await User.findById(req.user._id)
   res.send({
     data: user
   })
 })
-// router.patch('/users/me', sanitizeBody, authorize, async (req, res, next) => {
-//   try {
+router.patch('/users/me', sanitizeBody, authorize, async (req, res, next) => {
+  try {
 
-//     const {
-//       _id,
-//       ...otherAttributes
-//     } = req.sanitizedBody
+    const {
+      _id,
+      ...otherAttributes
+    } = req.sanitizedBody
 
-//     const user = await User.findByIdAndUpdate(
-//       req.params.id, {
-//         _id: req.params.id,
-//         ...otherAttributes
-//       }, {
-//         new: true,
-//         runValidators: true
-//       }
-//     )
-//     if (!user) throw new ResourceNotFoundError(
-//       `We could not find a user with id: ${req.params.id}`
-//     )
-//     res.send({
-//       data: user
-//     })
-//   } catch (err) {
-//     next(err)
-//   }
+    const user = await User.findById(req.user._id)
+
+    user.password = req.sanitizedBody.password
+    await user.save()
+    if (!user) throw new ResourceNotFoundError(
+      `We could not find a user with id: ${req.params.id}`
+    )
+    res.send({
+      data: user
+    })
+  } catch (err) {
+    next(err)
+  }
 
 
 
 
-// })
+})
 
 
 
