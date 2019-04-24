@@ -64,7 +64,6 @@ schema.pre('save', async function () {
   await this.populate('pizza').execPopulate();
 
   this.price = this.pizza.reduce((acc, element) => acc += element.price, 0)
-
   if (this.type == 'delivery') {
     this.deliveryCharge = 500
     this.address = true
