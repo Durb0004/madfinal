@@ -1,12 +1,17 @@
 'use strict'
 const debug = require('debug')('week7')
 const express = require('express')
+const cors = require('cors')
+const helmet = require('helmet')
 const sanitizeMongo = require('express-mongo-sanitize')
 
 
 require('./startup/database')() // IIFE
 
 const app = express()
+app.use(cors())
+app.use(helmet())
+
 app.use(express.json())
 app.use(sanitizeMongo())
 
