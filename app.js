@@ -1,9 +1,4 @@
 'use strict'
-
-// Don't forget to use NPM to install Express and Mongoose.
-//hi
-
-
 const debug = require('debug')('week7')
 const express = require('express')
 const sanitizeMongo = require('express-mongo-sanitize')
@@ -27,5 +22,5 @@ app.use(require('./middleware/logError'))
 app.use(require('./middleware/errorHandler'))
 
 
-const port = process.env.PORT || 3030
+const port = process.env.PORT || 3030;
 app.listen(port, () => debug(`Express is listening on port ${port} ...`))
