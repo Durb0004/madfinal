@@ -1,9 +1,10 @@
-{
+    {
 
-    "db": {
-        "host": "mongodb.mad9124.rocks",
-        "name": "final-durb0004-lich0020",
-        "user": "durb0004-lich0020",
-        "password": "hus87zwuwkg8aa1wea1c0zm62ti5x1"
+        "db": {
+            "host": "mongodb.mad9124.rocks",
+            "name": "final-durb0004-lich0020",
+            "username": "durb0004-lich0020",
+            "password": "hus87zwuwkg8aa1wea1c0zm62ti5x1",
+            "port": "80"
+        }
     }
-}
